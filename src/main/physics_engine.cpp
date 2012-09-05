@@ -16,12 +16,12 @@ namespace simphys {
       lastTick = dt;
       auto objects = sw->getObjects();
       for (auto& obj : objects) {
-	auto p = obj->getState();
+	    auto p = obj->getState();
 	
-	// really cheap way of testing for collisions with ground.
-	if (p->getPosition().getY() > 0.0f) {
-	  p->integrate(dt, 3);
-	} 
+	    // really cheap way of testing for collisions with ground.
+	    if (p->getPosition().getY() > 0.0f) {
+	      p->integrate(dt, 3);
+	    } 
       }
     } 
   }

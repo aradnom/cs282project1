@@ -19,6 +19,11 @@ add_executable(project1
 )
 target_link_libraries(project1 spengine)
 
+# comparison program
+add_executable(comparison
+  src/main/comparison.cpp
+)
+
 # build spengine library
 add_library(spengine SHARED
   src/main/vec3.cpp
