@@ -20,6 +20,9 @@ namespace simphys {
     // current position
     vec3 pos;
 
+	// Last position
+	vec3 lastPos; 
+
     // current velocity
     vec3 vel;
 
@@ -54,7 +57,7 @@ namespace simphys {
     float getMass() const;    
 
     // Update the position and velocity of this particle.
-    void integrate(fseconds duration);
+    void integrate(fseconds duration, int type = 1); // Euler
     
     // clear the force accumulation vector
     void clearForces();

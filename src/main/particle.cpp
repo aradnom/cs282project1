@@ -1,9 +1,11 @@
 #include "simphys/particle.h"
+#include <iostream>
 
 namespace simphys {
 
   Particle::Particle()
     : pos{0.0f, 0.0f, 0.0f}
+	, lastPos{0.0f, 0.0f, 0.0f}
     , vel{0.0f, 0.0f, 0.0f}
     , acc{0.0f, 0.0f, 0.0f}
     , accumulatedForces{0.0f, 0.0f, 0.0f}
@@ -51,24 +53,35 @@ namespace simphys {
     return 1.0f / invMass;
   }
 
-  void Particle::integrate(fseconds duration) {
+  void Particle::integrate(fseconds duration, int type) { // Defaults to Euler
 
     // don't move objects that have "infinite mass."
     if (invMass <= 0.0f) {
       return;
     }
 
-    // update position using Euler integration
-    pos = pos + duration.count() * vel;
+	// Universal properties
+	//lastPos = pos; // Only necessary for position Verlet
 
-    vec3 resultantAcc = acc;
-    resultantAcc = resultantAcc + (invMass * accumulatedForces);
+	vec3 resultantAcc = acc + (invMass * accumulatedForces);
 
-    // update velocity using Euler integration
-    vel = vel + duration.count() * resultantAcc;
+	if ( type == 1 ) { // Euler
+		// update position using Euler integration
+		pos = pos + duration.count() * vel;
 
-    // incorporate damping
-    vel = vel * damping;
+		// update velocity using Euler integration
+		vel = vel + duration.count() * resultantAcc;
+
+		// incorporate damping
+		vel = vel * damping;
+	} else if ( type == 2 ) { // RK
+
+	} else { // Velocity Verlet
+		pos = pos + ( vel * duration.count() ) + ( 0.5f * resultantAcc * duration.count() * duration.count() );
+
+		// Assumes acc doesn't change between steps - still need to solve for acc+1 to be accurate
+		vel = vel + ( 0.5f * 2 * resultantAcc ) * duration.count();	
+	}   
 
     clearForces();
 

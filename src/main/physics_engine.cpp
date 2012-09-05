@@ -20,7 +20,7 @@ namespace simphys {
 	
 	// really cheap way of testing for collisions with ground.
 	if (p->getPosition().getY() > 0.0f) {
-	  p->integrate(dt);
+	  p->integrate(dt, 3);
 	} 
       }
     } 
