@@ -77,7 +77,8 @@ namespace simphys {
     sw_ptr = sw;
   }
 
-  void SimEngine::setClock(std::shared_ptr<Clock<fseconds> > clock) {
+  void SimEngine::setClock(std::shared_ptr<Clock<fseconds> > clock, float timeScale) {
+	clock->setScale( timeScale );
     rt_c = clock;
   }
   

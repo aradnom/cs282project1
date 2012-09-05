@@ -83,7 +83,7 @@ namespace simphys {
     /*
       Set the clock.
     */
-    void setClock(std::shared_ptr<Clock<fseconds> > clock);
+    void setClock(std::shared_ptr<Clock<fseconds> > clock, float timeScale = 1.0f);
     
   };
 

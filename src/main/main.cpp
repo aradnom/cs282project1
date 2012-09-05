@@ -13,12 +13,14 @@
 #include "simphys/vec3.h"
 
 int main(int argc, char **argv) {
+  // Chwxk for timescale flag and set appropriately
+  float timeScale = argc > 1 ? atof( argv[1] ) : 1.0f;	
 
   // create a simulator
   simphys::SimEngine sim;
 
   auto clock_ptr = std::make_shared< simphys::Clock<fseconds> >(fseconds{0.0f});
-  sim.setClock(clock_ptr);
+  sim.setClock(clock_ptr, timeScale);
 
   // create a world to simulate
   auto world_ptr = std::make_shared<simphys::SimWorld>(); 
