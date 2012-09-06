@@ -62,7 +62,6 @@ namespace simphys {
 
 	// Universal properties
 	//lastPos = pos; // Only necessary for position Verlet
-
 	vec3 resultantAcc = acc + (invMass * accumulatedForces);
 
 	if ( type == 1 ) { // Euler
@@ -79,7 +78,7 @@ namespace simphys {
 	} else { // Velocity Verlet
 		pos = pos + ( vel * duration.count() ) + ( 0.5f * resultantAcc * duration.count() * duration.count() );
 
-		// Assumes acc doesn't change between steps - still need to solve for acc+1 to be accurate
+		// Assumes acc doesn't change between steps - still need to solve for acc+1 to be accurate if a changes
 		vel = vel + ( 0.5f * 2 * resultantAcc ) * duration.count();	
 	}   
 
