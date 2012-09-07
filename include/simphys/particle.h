@@ -38,6 +38,9 @@ namespace simphys {
     // 1.0f / mass
     float invMass;
 
+		// Sprite is a square but for collision purposes we'll assume it's a circle
+		float radius;
+
   public:
 
     Particle();
@@ -48,13 +51,15 @@ namespace simphys {
     void setAcceleration(const vec3& newAcc);
     void setDamping(float d);
     void setMass(float m);
+		void setRadius( float r );
 
     // getters
     vec3 getPosition() const;
     vec3 getVelocity() const;
     vec3 getAcceleration() const;
     float getDamping() const;
-    float getMass() const;    
+    float getMass() const;  
+		float getRadius() const;  
 
     // Update the position and velocity of this particle.
     void integrate(fseconds duration, int type = 1); // Euler

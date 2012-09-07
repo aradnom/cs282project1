@@ -48,10 +48,6 @@ int main(int argc, char **argv) {
   objState2->setMass(50.0);
   objState2->setDamping(0.9);
 
-  // Add particles to the engine
-  (sim.getPhysicsEngine())->addParticle( objState );
-  (sim.getPhysicsEngine())->addParticle( objState2 );
-
   // Add force generators to set up a basic collision
   auto gravity = std::make_shared<simphys::ForceGravity>(5.0f);
   (sim.getPhysicsEngine())->addForce( gravity, objState );  

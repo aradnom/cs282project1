@@ -10,7 +10,8 @@ namespace simphys {
     , acc{0.0f, 0.0f, 0.0f}
     , accumulatedForces{0.0f, 0.0f, 0.0f}
     , damping{1.0f}
-    , invMass{1.0f} { }
+    , invMass{1.0f}
+	, radius{32.0f} { }
 
   void Particle::setPosition(const vec3& newPos) {
     pos = newPos;
@@ -32,6 +33,10 @@ namespace simphys {
     // TODO - decide if this is reasonable. Error handling?
     invMass = 1.0f / m;
   }
+	
+	void Particle::setRadius( float r ) {
+		radius = r;
+	}
 
   vec3 Particle::getPosition() const {
     return pos;
@@ -52,6 +57,10 @@ namespace simphys {
   float Particle::getMass() const {
     return 1.0f / invMass;
   }
+
+	float Particle::getRadius() const {
+		return radius;
+	}
 
   void Particle::integrate(fseconds duration, int type) { // Defaults to Euler
 

@@ -6,6 +6,7 @@
 #include <memory>
 #include <chrono>
 #include <iostream>
+#include <math.h>
 
 namespace simphys {
 
@@ -17,23 +18,40 @@ namespace simphys {
     if (dt - lastTick > fseconds{0.001}) {
       lastTick = dt;
 
-	  // Apply all forces in the registry
-	  registry.update( dt );
+	  	// Apply all forces in the registry
+	  	registry.update( dt );
 
-	  // Deal with collisions
-	  cout << 
+	  	//std::vector<shared_ptr<SimObject2D> > objects = sw->getObjects();
 
-	  // Iterate through all particles and do... stuff
-	  for ( auto& p : particles ) {
-		if (p->getPosition().getY() < 0.0f) continue; // This particle is under the floor. =(
+	  	// Iterate through all particles and do... stuff		
+	  	for ( auto & p : sw->getObjects() ) {
+	    	if ( p->getState()->getPosition().getY() < 0.0f) continue; // This particle is under the floor. =(
 
-		// Resolve collisions
-		
+				p->getState()->integrate( dt );
+	  	}
 
-		// Integrate particle forces and update positions
-	  	p->integrate(dt);
-	  }
+			// Calculate collisions
+			getCollisions();
     } 
+  }
+
+  void PhysicsEngine::getCollisions () {
+	collisions.clear(); // Clear old collision information
+	
+	// Iterate through particles and generate collision objects for those found
+	// to be colliding.  For the time being, based on simple object radius and 
+	// will simply compare objects against each other to determine collision.	
+	for ( auto & first : sw->getObjects() ) {
+	  for ( auto & second : sw->getObjects() ) {
+			if ( first == second ) continue; // Move on if comparing to self
+			vec3 distance = ( first->getState()->getPosition() - second->getState()->getPosition() );
+
+			if ( distance.norm_sq() < pow( first->getState()->getRadius() + second->getState()->getRadius(), 2 ) )
+				std::cout << distance.norm_sq() << "\n";
+	  }	  
+
+	  //p->getState()->integrate( dt );
+		}
   }
 
   void PhysicsEngine::setSimWorld(shared_ptr<SimWorld> simworld) {
@@ -42,10 +60,6 @@ namespace simphys {
 
   shared_ptr<SimWorld> PhysicsEngine::getSimWorld() const {
     return sw;
-  }
-
-  void PhysicsEngine::addParticle( shared_ptr<Particle> p ) {
-	particles.push_back( p );
   }
 
   void PhysicsEngine::addForce( shared_ptr<ForceGenerator> fg, shared_ptr<Particle> p ) {

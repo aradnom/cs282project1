@@ -5,13 +5,13 @@
 #include <chrono>
 #include <vector>
 #include "simphys/registry.h"
+#include "simphys/collision.h"
 
 namespace simphys {
 
   class Particle;
   class SimWorld;
   class SpringForce;
-  class ForceRegistry;
 
   using std::shared_ptr;
   
@@ -21,8 +21,8 @@ namespace simphys {
   private:
     shared_ptr<SimWorld> sw;
     fseconds lastTick;
-	std::vector<shared_ptr<Particle> > particles;
 	ForceRegistry registry;
+	std::vector<Collision> collisions;
 
   public:
     PhysicsEngine()
@@ -33,10 +33,10 @@ namespace simphys {
     */
     void tick(fseconds dt);
 
+	void getCollisions();
+
     void setSimWorld(shared_ptr<SimWorld> simworld);
     shared_ptr<SimWorld> getSimWorld() const;
-
-	void addParticle( shared_ptr<Particle> p );
 
 	void addForce( shared_ptr<ForceGenerator> fg, shared_ptr<Particle> p );
 
