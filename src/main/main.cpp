@@ -12,6 +12,7 @@
 #include "simphys/particle.h"
 #include "simphys/vec3.h"
 #include "simphys/spring_force.h"
+#include "simphys/force_gravity.h"
 
 int main(int argc, char **argv) {
   // Chwxk for timescale flag and set appropriately
@@ -41,9 +42,30 @@ int main(int argc, char **argv) {
   auto objState = obj_ptr->getState();
   objState->setPosition(simphys::vec3{100, 500.5, 0});
   objState->setVelocity(simphys::vec3{200.0, 60.0, 0});
-  objState->setAcceleration(simphys::vec3{0, -9.8, 0});
+  objState->setAcceleration(simphys::vec3{0, 0, 0});
   objState->setMass(1.0);
   objState->setDamping(0.8);
+
+  // Create a second object
+  simphys::Particle p2;
+  simphys::Sprite s2;
+  auto obj_ptr2 = std::make_shared<simphys::SimObject2D>(p2, s2);
+  auto objState2 = obj_ptr->getState();
+  objState2->setPosition(simphys::vec3{200, 200, 0});
+  //objState->setVelocity(simphys::vec3{200.0, 60.0, 0});
+  //objState->setAcceleration(simphys::vec3{0, -9.8, 0});
+  objState2->setMass(1.0);
+  objState2->setDamping(0.8);
+
+  // Add particles to the engine
+  (sim.getPhysicsEngine())->addParticle( objState );
+  (sim.getPhysicsEngine())->addParticle( objState2 );
+
+  // Add force generators to the registry
+  //std::shared_ptr<simphys::ForceGravity> thingy;
+  auto gravity = std::make_shared<simphys::ForceGravity>(simphys::vec3{0,-9.8f,0});
+  (sim.getPhysicsEngine())->addForce( gravity, objState );
+  
 
   // add spring force generator
   auto springy = std::make_shared<simphys::SpringForce>(anchor_state->getPosition(), 1, 300.0);

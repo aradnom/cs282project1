@@ -27,6 +27,8 @@ namespace simphys {
        given particle.
     */
     virtual void update(shared_ptr<Particle> p, fsecond dt) = 0;
+
+	friend class ForceRegistry; // Let the force registry in so update can be called
   };
     
 }

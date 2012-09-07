@@ -1,6 +1,7 @@
 #include "simphys/physics_engine.h"
 #include "simphys/sim_world.h"
 #include "simphys/spring_force.h"
+#include "simphys/registry.h"
 
 #include <memory>
 #include <chrono>
@@ -16,20 +17,28 @@ namespace simphys {
     if (dt - lastTick > fseconds{0.001}) {
       lastTick = dt;
 
-      //auto objects = sw->getObjects();
-      //for (auto& obj : objects) {
-      for (auto& r : reg) {
-	auto sfg = r.first;
-	auto p = r.second;
+	  // Apply all forces in the registry
+	  registry.update( dt );
+
+	  // Integrate all particles
+	  for ( auto& p : particles ) {
+		if (p->getPosition().getY() > 0.0f)
+
+	  	p->integrate(dt);
+	  }
+
+      /*for (auto& r : reg) {
+		auto sfg = r.first;
+		auto p = r.second;
 	
-	// apply the spring force.
-	sfg->update(p, dt);
+		// apply the spring force.
+		//sfg->update(p, dt);
 
-	// really cheap way of testing for collisions with ground.
-	if (p->getPosition().getY() > 0.0f)
-	  p->integrate(dt);
+		// really cheap way of testing for collisions with ground.
+		if (p->getPosition().getY() > 0.0f)
 
-      }
+	  	p->integrate(dt);
+      }*/
     } 
   }
 
@@ -43,6 +52,14 @@ namespace simphys {
 
   void PhysicsEngine::addSpringPair(shared_ptr<SpringForce> fg, shared_ptr<Particle> p) {
     reg.push_back(std::make_pair(fg, p));
+  }
+
+  void PhysicsEngine::addParticle( shared_ptr<Particle> p ) {
+	particles.push_back( p );
+  }
+
+  void PhysicsEngine::addForce( shared_ptr<ForceGenerator> fg, shared_ptr<Particle> p ) {
+    registry.addForce( fg, p );
   }
 
 }

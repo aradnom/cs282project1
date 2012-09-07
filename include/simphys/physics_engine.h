@@ -4,12 +4,15 @@
 #include <memory>
 #include <chrono>
 #include <vector>
+#include "simphys/registry.h"
 
 namespace simphys {
 
   class Particle;
   class SimWorld;
   class SpringForce;
+  class ForceRegistry;
+
   using std::shared_ptr;
   
   typedef std::chrono::duration<float, std::ratio<1,1> > fseconds;
@@ -22,6 +25,8 @@ namespace simphys {
     shared_ptr<SimWorld> sw;
     SpringRegistry reg;
     fseconds lastTick;
+	std::vector<shared_ptr<Particle> > particles;
+	ForceRegistry registry;
 
   public:
     PhysicsEngine()
@@ -36,6 +41,10 @@ namespace simphys {
     shared_ptr<SimWorld> getSimWorld() const;
 
     void addSpringPair(shared_ptr<SpringForce> fg, shared_ptr<Particle> p);
+
+	void addParticle( shared_ptr<Particle> p );
+
+	void addForce( shared_ptr<ForceGenerator> fg, shared_ptr<Particle> p );
 
   };
 

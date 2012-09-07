@@ -1,6 +1,7 @@
 #ifndef FORCE_REGISTRY
 #define FORCE_REGISTRY
 
+#include <chrono>
 #include <memory>
 #include <vector>
 
@@ -8,6 +9,8 @@ namespace simphys {
 
 	class Particle;
 	class ForceGenerator;
+
+	typedef std::chrono::duration<float, std::ratio<1,1> > fsecond;
 
 	using std::shared_ptr;
 
@@ -42,7 +45,7 @@ namespace simphys {
 		void clearParticle ( shared_ptr<Particle> p );
 
 		// Do the work
-		void update ( float dt );
+		void update ( fsecond dt );
 	
 	};
 }
