@@ -9,6 +9,7 @@
 #include "physics_engine.h"
 #include "clock.h"
 
+#include <memory>
 #include <chrono>
 
 namespace simphys {
@@ -83,8 +84,12 @@ namespace simphys {
     /*
       Set the clock.
     */
+
     void setClock(std::shared_ptr<Clock<fseconds> > clock, float timeScale = 1.0f);
-    
+
+    PhysicsEngine* getPhysicsEngine() {
+      return &pe;
+    }
   };
 
 }

@@ -14,8 +14,8 @@
 
 namespace simphys {
   
-  class Particle;
-  
+  class Particle;  
+
   typedef std::chrono::duration<float, std::ratio<1,1> > fsecond;
 
   using std::shared_ptr;
