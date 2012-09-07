@@ -10,17 +10,17 @@ namespace simphys {
 	class vec3;
 	class Particle;
 
-	class ForceGravity : public ForceGenerator {
+	class ForceWind : public ForceGenerator {
 	private:
 		
-		vec3 gravity;
+		vec3 wind;
 
 	public:
 		// Assign gravity value to force
-		ForceGravity ( const float _gravity );
+		ForceWind ( const vec3 _wind );
 
 		// Updated particle with gravity
-		void update(shared_ptr<Particle> p, fsecond dt);
+		void update ( shared_ptr<Particle> p, fsecond dt );
 	};
 
 }

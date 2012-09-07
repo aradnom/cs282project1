@@ -30,7 +30,7 @@ namespace simphys {
 			shared_ptr<Particle> p;
 		};
 	
-		// The Registry of Forces.  Which sounds like a team of superheroes.  That fight crime sequentially.
+		// The Registry of Forces.  Which sounds like a team of superheroes.  That fight crime sequentially.  In pairs.
 		std::vector<ForcePair> forces;
 	
 	public:

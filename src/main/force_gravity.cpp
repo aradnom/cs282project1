@@ -11,8 +11,8 @@ namespace simphys {
 	class vec3;
 	class Particle;
 	
-	// Assign gravity value to force
-	ForceGravity::ForceGravity ( const vec3 _gravity ) : gravity{_gravity} {}
+	// Assign gravity value to force only in y (assuming gravity will only go up or down)
+	ForceGravity::ForceGravity ( const float _gravity ) : gravity{ simphys::vec3{ 0, _gravity, 0 } } {}
 
 	// Updated particle with gravity
 	void ForceGravity::update(shared_ptr<Particle> p, fsecond dt) {

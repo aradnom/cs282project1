@@ -26,19 +26,6 @@ namespace simphys {
 
 	  	p->integrate(dt);
 	  }
-
-      /*for (auto& r : reg) {
-		auto sfg = r.first;
-		auto p = r.second;
-	
-		// apply the spring force.
-		//sfg->update(p, dt);
-
-		// really cheap way of testing for collisions with ground.
-		if (p->getPosition().getY() > 0.0f)
-
-	  	p->integrate(dt);
-      }*/
     } 
   }
 
@@ -48,10 +35,6 @@ namespace simphys {
 
   shared_ptr<SimWorld> PhysicsEngine::getSimWorld() const {
     return sw;
-  }
-
-  void PhysicsEngine::addSpringPair(shared_ptr<SpringForce> fg, shared_ptr<Particle> p) {
-    reg.push_back(std::make_pair(fg, p));
   }
 
   void PhysicsEngine::addParticle( shared_ptr<Particle> p ) {

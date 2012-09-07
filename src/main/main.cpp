@@ -13,9 +13,11 @@
 #include "simphys/vec3.h"
 #include "simphys/spring_force.h"
 #include "simphys/force_gravity.h"
+#include "simphys/force_wind.h"
 
 int main(int argc, char **argv) {
-  // Chwxk for timescale flag and set appropriately
+
+  // Check for timescale flag and set appropriately
   float timeScale = argc > 1 ? atof( argv[1] ) : 1.0f;	
 
   // create a simulator
@@ -50,30 +52,33 @@ int main(int argc, char **argv) {
   simphys::Particle p2;
   simphys::Sprite s2;
   auto obj_ptr2 = std::make_shared<simphys::SimObject2D>(p2, s2);
-  auto objState2 = obj_ptr->getState();
-  objState2->setPosition(simphys::vec3{200, 200, 0});
-  //objState->setVelocity(simphys::vec3{200.0, 60.0, 0});
-  //objState->setAcceleration(simphys::vec3{0, -9.8, 0});
-  objState2->setMass(1.0);
-  objState2->setDamping(0.8);
+  auto objState2 = obj_ptr2->getState();
+  objState2->setPosition(simphys::vec3{200, 10, 0});
+  objState2->setMass(2.0);
+  objState2->setDamping(0.9);
 
   // Add particles to the engine
   (sim.getPhysicsEngine())->addParticle( objState );
   (sim.getPhysicsEngine())->addParticle( objState2 );
 
-  // Add force generators to the registry
-  //std::shared_ptr<simphys::ForceGravity> thingy;
-  auto gravity = std::make_shared<simphys::ForceGravity>(simphys::vec3{0,-9.8f,0});
-  (sim.getPhysicsEngine())->addForce( gravity, objState );
-  
+  // Add force generators to the registry for object one
+  auto gravity = std::make_shared<simphys::ForceGravity>(-9.8f); // Go down
+  (sim.getPhysicsEngine())->addForce( gravity, objState );  
+  auto wind = std::make_shared<simphys::ForceWind>(simphys::vec3{-10.0f,0,0}); // Blow towards left side of screen
+  (sim.getPhysicsEngine())->addForce( wind, objState ); 
+  auto springy = std::make_shared<simphys::SpringForce>(anchor_state->getPosition(), 1, 300.0); // Jump around
+  (sim.getPhysicsEngine())->addForce( springy, objState );
 
-  // add spring force generator
-  auto springy = std::make_shared<simphys::SpringForce>(anchor_state->getPosition(), 1, 300.0);
-  (sim.getPhysicsEngine())->addSpringPair(springy, objState);
+  // Object 2
+  auto gravity2 = std::make_shared<simphys::ForceGravity>(10.0f); // Go up
+  (sim.getPhysicsEngine())->addForce( gravity2, objState2 );  
+  auto wind2 = std::make_shared<simphys::ForceWind>(simphys::vec3{5.0f,0.0f,0}); // Blow towards right side of screen
+  (sim.getPhysicsEngine())->addForce( wind2, objState2 ); 
 
   // add objects to the world.
   world_ptr->add(anchor_ptr);
   world_ptr->add(obj_ptr);
+  world_ptr->add(obj_ptr2);
 
   // initialize the simulator and run it.
   sim.init();
