@@ -23,8 +23,6 @@ namespace simphys {
 	  	// Apply all forces in the registry
 	  	registry.update( dt );
 
-	  	//std::vector<shared_ptr<SimObject2D> > objects = sw->getObjects();
-
 	  	// Iterate through all particles and do... stuff		
 	  	for ( auto & p : sw->getObjects() ) {
 	    	if ( p->getState()->getPosition().getY() < 0.0f) continue; // This particle is under the floor. =(
@@ -35,7 +33,8 @@ namespace simphys {
 			// Deal with collisions
 			getCollisions();
 			for ( auto & c : collisions ) {
-	    	std::cout << "boo";
+				c.resolveInter();
+				c.resolveVelocity();
 	  	}
     } 
   }
@@ -53,7 +52,7 @@ namespace simphys {
 
 				// Check if a collision has occurred
 				if ( distance.norm_sq() < pow( first->getState()->getRadius() + second->getState()->getRadius(), 2 ) ) {
-					Collision collision( first->getState(), second->getState() );
+					Collision collision( first->getState(), second->getState(), distance.norm_sq() );
 					collisions.push_back( collision );
 					continue;
 				}

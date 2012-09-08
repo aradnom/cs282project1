@@ -36,7 +36,8 @@ int main(int argc, char **argv) {
   auto obj_ptr = std::make_shared<simphys::SimObject2D>(p, s);
   auto objState = obj_ptr->getState();
   objState->setPosition(simphys::vec3{200, 100, 0});
-  objState->setMass(5.0);
+	objState->setVelocity(simphys::vec3{100, 25, 0});
+  objState->setMass(50.0);
   objState->setDamping(0.8);
 
   // Create a second object
@@ -45,11 +46,12 @@ int main(int argc, char **argv) {
   auto obj_ptr2 = std::make_shared<simphys::SimObject2D>(p2, s2);
   auto objState2 = obj_ptr2->getState();
   objState2->setPosition(simphys::vec3{1000, 100, 0});
+	objState2->setVelocity(simphys::vec3{-100, 25, 0});
   objState2->setMass(50.0);
-  objState2->setDamping(0.9);
+  objState2->setDamping(0.8);
 
   // Add force generators to set up a basic collision
-  auto gravity = std::make_shared<simphys::ForceGravity>(5.0f);
+  /*auto gravity = std::make_shared<simphys::ForceGravity>(5.0f);
   (sim.getPhysicsEngine())->addForce( gravity, objState );  
   auto wind = std::make_shared<simphys::ForceWind>(simphys::vec3{10.0f,0,0}); // Blow towards right side of screen
   (sim.getPhysicsEngine())->addForce( wind, objState ); 
@@ -58,7 +60,7 @@ int main(int argc, char **argv) {
   auto gravity2 = std::make_shared<simphys::ForceGravity>(25.0f);
   (sim.getPhysicsEngine())->addForce( gravity2, objState2 );  
   auto wind2 = std::make_shared<simphys::ForceWind>(simphys::vec3{-15.0f,0.0f,0}); // Blow towards left side of screen
-  (sim.getPhysicsEngine())->addForce( wind2, objState2 ); 
+  (sim.getPhysicsEngine())->addForce( wind2, objState2 );*/
 
   // add objects to the world.
   world_ptr->add(obj_ptr);
