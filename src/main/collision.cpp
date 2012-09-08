@@ -6,12 +6,12 @@
 namespace simphys {
 
 	Collision::Collision( std::shared_ptr<Particle> p1 ) {
-		restitution = 0.75f; // Set a default restitution of something < 1.0
+		restitution = 0.5f; // Set a default restitution of something < 1.0
 		particles.push_back( p1 );
 	}
 
 	Collision::Collision( std::shared_ptr<Particle> p1, std::shared_ptr<Particle> p2, float _inter ) {
-		restitution = 0.75f;
+		restitution = 0.5f;
 		inter = _inter;
 		normal = ( p1->getVelocity() - p2->getVelocity() );
 		normal.normalize();
@@ -56,7 +56,7 @@ namespace simphys {
 		// Impulsa from delta and inverse masses
 		vec3 impulse = delta * ( 1.0f / imasses );
 
-		//newVelocity = impulse.dotProduct( normal );
+		// Point impulse in the direction of the normal
 		newVelocity.setX( impulse.getX() * normal.getX() );
 		newVelocity.setY( impulse.getY() * normal.getY() );
 		newVelocity.setZ( impulse.getZ() * normal.getZ() );
