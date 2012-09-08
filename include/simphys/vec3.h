@@ -34,6 +34,11 @@ namespace simphys {
     */
     vec3& operator=(const vec3& other);
 
+		// Comparison operator - note these are comparing speed (magnitude)
+		bool operator < ( vec3 & other );
+
+		bool operator < ( float speed );
+
     /*
       Move operator
     */

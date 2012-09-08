@@ -32,6 +32,14 @@ simphys::vec3& simphys::vec3::operator=(const vec3& other) {
   return *this;
 }
 
+bool simphys::vec3::operator < ( vec3 & other ) {
+	return other.norm_sq() < this->norm_sq() ? true : false;
+}
+
+bool simphys::vec3::operator < ( float speed ) {
+	return this->norm_sq() < speed ? true : false;
+}
+
 float simphys::vec3::norm() const {
   return std::sqrt(x*x + y*y + z*z);
 }

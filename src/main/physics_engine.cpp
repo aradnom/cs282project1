@@ -2,6 +2,7 @@
 #include "simphys/sim_world.h"
 #include "simphys/spring_force.h"
 #include "simphys/registry.h"
+#include "simphys/collision.h"
 
 #include <memory>
 #include <chrono>
@@ -42,15 +43,13 @@ namespace simphys {
 	// to be colliding.  For the time being, based on simple object radius and 
 	// will simply compare objects against each other to determine collision.	
 	for ( auto & first : sw->getObjects() ) {
-	  for ( auto & second : sw->getObjects() ) {
-			if ( first == second ) continue; // Move on if comparing to self
-			vec3 distance = ( first->getState()->getPosition() - second->getState()->getPosition() );
+			for ( auto & second : sw->getObjects() ) {
+				if ( first == second ) continue; // Move on if comparing to self
+				vec3 distance = ( first->getState()->getPosition() - second->getState()->getPosition() );
 
-			if ( distance.norm_sq() < pow( first->getState()->getRadius() + second->getState()->getRadius(), 2 ) )
-				std::cout << distance.norm_sq() << "\n";
-	  }	  
-
-	  //p->getState()->integrate( dt );
+				if ( distance.norm_sq() < pow( first->getState()->getRadius() + second->getState()->getRadius(), 2 ) )
+					std::cout << distance.norm_sq() << "\n"; // A collision has occurred
+			}
 		}
   }
 

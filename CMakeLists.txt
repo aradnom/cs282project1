@@ -40,6 +40,7 @@ add_library(spengine SHARED
   src/main/force_gravity.cpp
   src/main/force_wind.cpp  
   src/main/spring_force.cpp
+	src/main/collision.cpp
 )
 target_link_libraries(spengine GL)
 target_link_libraries(spengine GLEW)
