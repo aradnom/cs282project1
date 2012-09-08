@@ -14,18 +14,17 @@ namespace simphys {
 	using std::shared_ptr;
   
   class Collision {
+	protected:
 		// If the size of this is 1, assume collision was with the ground (only 1 particle was involved
 		std::vector<shared_ptr<Particle> > particles; 
-
 		float restitution;
-
 		vec3 normal;
 
-	protected:
-
 		void resolveInterpenetration();
-
 		void resolveVelocity();
+
+	public:
+		Collision( std::shared_ptr<Particle> p1, std::shared_ptr<Particle> p2 );
 
 	};
 

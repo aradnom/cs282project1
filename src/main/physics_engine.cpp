@@ -4,6 +4,7 @@
 #include "simphys/registry.h"
 #include "simphys/collision.h"
 
+#include <vector>
 #include <memory>
 #include <chrono>
 #include <iostream>
@@ -31,24 +32,31 @@ namespace simphys {
 				p->getState()->integrate( dt );
 	  	}
 
-			// Calculate collisions
+			// Deal with collisions
 			getCollisions();
+			for ( auto & c : collisions ) {
+	    	std::cout << "boo";
+	  	}
     } 
   }
 
   void PhysicsEngine::getCollisions () {
-	collisions.clear(); // Clear old collision information
+		collisions.clear(); // Clear old collision information
 	
-	// Iterate through particles and generate collision objects for those found
-	// to be colliding.  For the time being, based on simple object radius and 
-	// will simply compare objects against each other to determine collision.	
-	for ( auto & first : sw->getObjects() ) {
+		// Iterate through particles and generate collision objects for those found
+		// to be colliding.  For the time being, based on simple object radius and 
+		// will simply compare objects against each other to determine collision.	
+		for ( auto & first : sw->getObjects() ) {
 			for ( auto & second : sw->getObjects() ) {
 				if ( first == second ) continue; // Move on if comparing to self
 				vec3 distance = ( first->getState()->getPosition() - second->getState()->getPosition() );
 
-				if ( distance.norm_sq() < pow( first->getState()->getRadius() + second->getState()->getRadius(), 2 ) )
-					std::cout << distance.norm_sq() << "\n"; // A collision has occurred
+				if ( distance.norm_sq() < pow( first->getState()->getRadius() + second->getState()->getRadius(), 2 ) ) {
+					//std::cout << distance.norm_sq() << "\n"; // A collision has occurred
+					Collision collision( first->getState(), second->getState() );
+					collisions.push_back( collision );
+					continue;
+				}
 			}
 		}
   }

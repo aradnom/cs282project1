@@ -2,6 +2,10 @@
 #include "simphys/collision.h"
 
 namespace simphys {
+
+	Collision::Collision( std::shared_ptr<Particle> p1, std::shared_ptr<Particle> p2 ) {
+
+	}
 	
 	void Collision::resolveInterpenetration () {
 		
@@ -20,7 +24,7 @@ namespace simphys {
 
 		velocity = (-1.0f * velocity) * restitution; // New velocity post-collision
 
-		float impulse = delta * ( 1.0f / ( particles[0]->getMass() + particles[1]->getMass() ) );
+		vec3 impulse = delta * ( 1.0f / ( particles[0]->getMass() + particles[1]->getMass() ) );
 
 		//return velocity * normal;
 	}

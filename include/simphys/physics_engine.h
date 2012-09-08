@@ -26,7 +26,7 @@ namespace simphys {
 
   public:
     PhysicsEngine()
-      : lastTick{fseconds{0.016}} { }
+      : lastTick{fseconds{0.016}} {}
 
     /*
       Update state.
