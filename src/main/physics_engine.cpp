@@ -51,8 +51,8 @@ namespace simphys {
 				if ( first == second ) continue; // Move on if comparing to self
 				vec3 distance = ( first->getState()->getPosition() - second->getState()->getPosition() );
 
+				// Check if a collision has occurred
 				if ( distance.norm_sq() < pow( first->getState()->getRadius() + second->getState()->getRadius(), 2 ) ) {
-					//std::cout << distance.norm_sq() << "\n"; // A collision has occurred
 					Collision collision( first->getState(), second->getState() );
 					collisions.push_back( collision );
 					continue;

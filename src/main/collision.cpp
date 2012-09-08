@@ -3,8 +3,13 @@
 
 namespace simphys {
 
-	Collision::Collision( std::shared_ptr<Particle> p1, std::shared_ptr<Particle> p2 ) {
+	Collision::Collision( std::shared_ptr<Particle> p1 ) {
+		particles.push_back( p1 );
+	}
 
+	Collision::Collision( std::shared_ptr<Particle> p1, std::shared_ptr<Particle> p2 ) {
+		particles.push_back( p1 );
+		particles.push_back( p2 );
 	}
 	
 	void Collision::resolveInterpenetration () {
