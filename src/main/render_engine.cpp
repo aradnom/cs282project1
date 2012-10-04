@@ -152,7 +152,7 @@ namespace simphys {
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     
     glMatrixMode(GL_PROJECTION);
-    gluOrtho2D(0, windowWidth, 0, windowHeight);
+    gluOrtho2D(0, 1333, 0, 1000);
     
     glMatrixMode(GL_MODELVIEW);
     glClear(GL_COLOR_BUFFER_BIT);

@@ -64,22 +64,24 @@ namespace simphys {
 	//lastPos = pos; // Only necessary for position Verlet
 	vec3 resultantAcc = acc + (invMass * accumulatedForces);
 
+    auto dt = duration.count();
+
 	if ( type == 1 ) { // Euler
 		// update position using Euler integration
-		pos = pos + duration.count() * vel;
+		pos = pos + dt * vel;
 
 		// update velocity using Euler integration
-		vel = vel + duration.count() * resultantAcc;
+		vel = vel + dt * resultantAcc;
 
 		// incorporate damping
-		vel = vel * damping;
+		vel = vel * std::pow(damping, dt);
 	} else if ( type == 2 ) { // RK
 
 	} else { // Velocity Verlet
-		pos = pos + ( vel * duration.count() ) + ( 0.5f * resultantAcc * duration.count() * duration.count() );
+		pos = pos + ( vel * dt ) + ( 0.5f * resultantAcc * dt * dt );
 
 		// Assumes acc doesn't change between steps - still need to solve for acc+1 to be accurate if a changes
-		vel = vel + ( 0.5f * 2 * resultantAcc ) * duration.count();	
+		vel = vel + ( 0.5f * 2 * resultantAcc ) * dt;	
 	}   
 
     clearForces();

@@ -36,8 +36,10 @@ add_library(spengine SHARED
   src/main/simobject2D.cpp
   src/main/sprite.cpp
   src/main/physics_engine.cpp
+
   src/main/force_gravity.cpp
   src/main/registry.cpp
+  src/main/spring_force.cpp
 )
 target_link_libraries(spengine GL)
 target_link_libraries(spengine GLEW)
