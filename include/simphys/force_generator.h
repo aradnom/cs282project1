@@ -26,7 +26,7 @@ namespace simphys {
        Override this function to apply a specific type of force to the
        given particle.
     */
-    virtual void update(shared_ptr<Particle> p, fsecond dt)=0;
+    virtual void update(shared_ptr<Particle> p, fsecond dt) = 0;
   };
     
 }

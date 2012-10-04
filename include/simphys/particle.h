@@ -32,7 +32,7 @@ namespace simphys {
     // accumulated force for the current time step
     vec3 accumulatedForces;
 
-    // Damping parameter 
+    // Damping parameter
     float damping;
 
     // 1.0f / mass
