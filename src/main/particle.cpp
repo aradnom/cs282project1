@@ -76,7 +76,7 @@ namespace simphys {
 		// incorporate damping
 		vel = vel * std::pow(damping, dt);
 	} else if ( type == 2 ) { // RK
-
+		// Pop RK4 in here at some point because... why not
 	} else { // Velocity Verlet
 		pos = pos + ( vel * dt ) + ( 0.5f * resultantAcc * dt * dt );
 

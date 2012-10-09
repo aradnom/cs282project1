@@ -20,10 +20,17 @@ namespace simphys {
 	  // Apply all forces in the registry
 	  registry.update( dt );
 
-	  // Integrate all particles
-	  for ( auto& p : particles ) {
-		if (p->getPosition().getY() > 0.0f)
+	  // Deal with collisions
+	  cout << 
 
+	  // Iterate through all particles and do... stuff
+	  for ( auto& p : particles ) {
+		if (p->getPosition().getY() < 0.0f) continue; // This particle is under the floor. =(
+
+		// Resolve collisions
+		
+
+		// Integrate particle forces and update positions
 	  	p->integrate(dt);
 	  }
     } 
